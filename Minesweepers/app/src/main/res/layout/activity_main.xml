@@ -5,8 +5,9 @@
     android:orientation="vertical"
     android:weightSum="1">
     <com.example.w4pity.minesweepers.CustomView
-        android:layout_width="390dp"
-        android:layout_height="390dp"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:id="@+id/Cv"
 
         />
     <LinearLayout
