@@ -98,8 +98,8 @@ public class CustomView extends View {
         touchx = new float[16];
         touchy = new float[16];
 // initialise the first square that will be shown at all times
-        touchx[0] = 200.f;
-        touchy[0] = 200.f;  
+        touchx[0] = 200.f;  
+        touchy[0] = 200.f;
 // initialise the rectangle
         square = new Rect(0, 0, size, size);
 
