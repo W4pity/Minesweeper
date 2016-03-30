@@ -87,7 +87,8 @@ public class CustomView extends View {
         }
         for(int i =0; i<10; i++)
             for(int j = 0; j<10;j++) {
-               grid[j][i].nbBombe = analyze(j,i);
+               grid[i][j].nbBombe = analyze(j,i);
+                grid[i][j].stateWrite();
             }
 
 // initialise all the touch arrays to have 16 elements as we know no way to
@@ -98,7 +99,7 @@ public class CustomView extends View {
         touchx = new float[16];
         touchy = new float[16];
 // initialise the first square that will be shown at all times
-        touchx[0] = 200.f;  
+        touchx[0] = 200.f;
         touchy[0] = 200.f;
 // initialise the rectangle
         square = new Rect(0, 0, size, size);
@@ -110,6 +111,21 @@ public class CustomView extends View {
 
     // public method that needs to be overridden to draw the contents of this
 // widget
+
+
+    public Paint testColor(cell c)
+    {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        if(c.nbBombe == 1)
+            p.setColor(Color.BLUE);
+        else if(c.nbBombe == 2)
+            p.setColor(Color.GREEN);
+        else if(c.nbBombe == 3)
+            p.setColor(Color.YELLOW);
+        else
+            p.setColor(Color.RED);
+        return p;
+    }
     public void onDraw(Canvas canvas) {
 // call the superclass method
         super.onDraw(canvas);
@@ -122,13 +138,14 @@ public class CustomView extends View {
                //canvas.drawRect(new Rect(-0+i*size/2, -size/2, size/2, 0+i*size/2), black);
                canvas.save();
                grid[j][i].state();
+               grid[j][i].stateWrite();
               // grid[9][7].actualPaint.setColor(Color.RED);
                grid[j][i].x = i*size;
                grid[j][i].y = j*size;
                 grid[j][i].r = new Rect(i*size+1, j*size+1, size+i*size, size+j*size);
                canvas.drawRect(grid[j][i].r, grid[j][i].actualPaint);
-               if(grid[j][i].cover == Cover.NO)
-                   canvas.drawText(grid[j][i].nbBombe, grid[j][i].r.centerX(), grid[j][i].r.centerY(), green);
+               if(grid[j][i].cover == Cover.NO && grid[j][i].nbBombe!=0)
+                   canvas.drawText(grid[j][i].nbBombe+"", grid[j][i].r.centerX(), grid[j][i].r.centerY(), testColor(grid[j][i]));
 
                canvas.restore();
 
@@ -258,7 +275,7 @@ public class CustomView extends View {
         return super.onTouchEvent(event);
     }
 
-    public String analyze(int x, int y)
+    public int analyze(int x, int y)
     {
         int nb = 0;
         if(x==0 && y==0)
@@ -372,8 +389,8 @@ public class CustomView extends View {
                 nb++;
         }
         if(nb == 0)
-            return " ";
-        else return nb+"";
+            return 0;
+        else return nb;
 
     }
 

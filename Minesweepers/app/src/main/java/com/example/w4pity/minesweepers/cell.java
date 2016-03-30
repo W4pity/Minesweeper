@@ -15,18 +15,26 @@ public class cell {
    public Rect r;
     public int x, y;
     public Type type;
-    public String nbBombe;
+    public int nbBombe;
     public Cover cover = Cover.YES;
     public Paint  blue = new Paint(Paint.ANTI_ALIAS_FLAG);
+    public Paint  black = new Paint(Paint.ANTI_ALIAS_FLAG);
+    public Paint  green = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint red = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint actualPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-
+    public Paint actualWrite = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public cell (Type t)
     {
         actualPaint.setColor(0xFF0000FF);
+        actualWrite.setColor(0xFF0000FF);
         blue.setColor(0xFF0000FF);
         red.setColor(0xFFFF0000);
+        green = new Paint(Paint.ANTI_ALIAS_FLAG);
+        black = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        green.setColor(0xFF00FF00);
+        black.setColor(0xFFFFFFFF);
         type = t;
     }
 
@@ -40,6 +48,18 @@ public class cell {
             if(type == Type.MINE)
                 actualPaint.setColor(Color.RED);
         }
+    }
+
+    public void stateWrite()
+    {
+        if(nbBombe == 1)
+            actualWrite.setColor(Color.BLUE);
+       else if(nbBombe == 2)
+            actualWrite.setColor(Color.GREEN);
+        else if(nbBombe == 3)
+            actualWrite.setColor(Color.YELLOW);
+        else
+            actualWrite.setColor(Color.RED);
     }
 
 
