@@ -3,6 +3,7 @@ package com.example.w4pity.minesweepers;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.widget.Toast;
 
 /**
  * Created by W4pity on 30/03/2016.
@@ -45,8 +46,13 @@ public class cell {
         else if(cover == Cover.NO) {
             actualPaint.setColor(Color.WHITE);
 
-            if(type == Type.MINE)
+            if(type == Type.MINE) {
                 actualPaint.setColor(Color.RED);
+                Toast.makeText(CustomView.cc, "GAME OVER", Toast.LENGTH_LONG).show();
+
+                CustomView.lost = true;
+            }
+
         }
     }
 
