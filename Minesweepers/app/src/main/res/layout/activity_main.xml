@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/ly">
     <com.example.w4pity.minesweepers.CustomView
         android:layout_width="match_parent"
         android:layout_height="290dp"
@@ -20,8 +21,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="uncover mode"
+        android:id="@+id/bu"
         android:layout_weight="0.48" />
 
 
@@ -45,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="Total: 20"
             android:id="@+id/textView1"
             android:layout_weight="0.48" />
 
@@ -53,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="Marked: 0"
             android:id="@+id/textView2"
             android:layout_weight="0.48" />
     </LinearLayout>

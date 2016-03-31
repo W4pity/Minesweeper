@@ -24,6 +24,8 @@ public class cell {
     public Paint red = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint actualPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint actualWrite = new Paint(Paint.ANTI_ALIAS_FLAG);
+    public boolean marked = false;
+
 
     public cell (Type t)
     {
@@ -41,14 +43,19 @@ public class cell {
 
     public void state()
     {
-        if (cover == Cover.YES)
+
+        if (cover == Cover.YES) {
             actualPaint.setColor(Color.BLUE);
+            if(marked)
+                actualPaint.setColor(Color.YELLOW);
+        }
+
         else if(cover == Cover.NO) {
             actualPaint.setColor(Color.WHITE);
 
             if(type == Type.MINE) {
                 actualPaint.setColor(Color.RED);
-                Toast.makeText(CustomView.cc, "GAME OVER", Toast.LENGTH_LONG).show();
+               // Toast.makeText(CustomView.cc, "GAME OVER", Toast.LENGTH_LONG).show();
 
                 CustomView.lost = true;
             }

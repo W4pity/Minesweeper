@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.Display;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -28,9 +30,11 @@ public class CustomView extends View {
      private float touchy[]; // y position of each touch
      private int first; // the first touch to be rendered
      private boolean touch; // do we have at least on touch
-    private int size;
+    public int size;
     public static boolean lost = false, win = false;
     public static Context cc;
+    public static boolean mode = true; //1= normal 0 marking
+    public int mark = 0;
     // default constructor for the class that takes in a context
     public CustomView(Context c) {
         super(c);
@@ -59,11 +63,14 @@ public class CustomView extends View {
     private void init() {
 
         // create the paint objects for rendering our rectangles
-       CustomView c = (CustomView)findViewById(R.id.Cv);
+
         //int width = getDisplay().;
-        size=40;
+       // size=40;
         Log.d("sizewidth", "size" + 7);
 
+       // LinearLayout l = (LinearLayout)findViewById(R.id.ly);
+       // int width = l.getWidth();
+        //Log.d("sizeL", ": "+width);
         //int height = getMeasuredHeight();
         //c.setMeasuredDimension(width, width);
        // c.setMeasuredDimension(c.getMeasuredWidth(),c.getMeasuredWidth());
@@ -98,27 +105,39 @@ public class CustomView extends View {
                 grid[i][j].stateWrite();
             }
 
-
-// initialise all the touch arrays to have 16 elements as we know no way to
-// accurately determine how many pointers the device will handle. 16 is an
-// overkill value for phones and tablets as it would require a minimum of
-// four hands on a device to hit that pointer limit
-        touches = new boolean[16];
-        touchx = new float[16];
-        touchy = new float[16];
-// initialise the first square that will be shown at all times
-        touchx[0] = 200.f;
-        touchy[0] = 200.f;
-// initialise the rectangle
-        square = new Rect(0, 0, size, size);
-
-// we start off with nothing touching the view
-        touch = false;
-
     }
 
     // public method that needs to be overridden to draw the contents of this
 // widget
+
+    public void reset()
+    {
+        CustomView.lost = false;
+        for(int i =0; i<10; i++)
+            for(int j = 0; j<10;j++) {
+                CustomView.grid[i][j].cover = Cover.YES;
+                //CustomView.grid[i][j].actualPaint.setColor(Color.BLUE);
+                CustomView.grid[i][j].type = Type.INCONNU;
+                CustomView.grid[i][j].marked = false;
+            }
+        for(int i = 0; i<20; i++)
+        {
+            //int[] rand = new int[100];
+            Random rx = new Random();
+            Random ry = new Random();
+            int a = rx.nextInt(9);
+            int b = ry.nextInt(9);
+            if(CustomView.grid[a][b].type != Type.MINE)
+                CustomView.grid[a][b].type = Type.MINE;
+            else i--;
+        }
+        for(int i =0; i<10; i++)
+            for(int j = 0; j<10;j++) {
+                grid[i][j].nbBombe = analyze(j,i);
+                grid[i][j].stateWrite();
+            }
+
+    }
 
 
     public Paint testColor(cell c)
@@ -132,6 +151,7 @@ public class CustomView extends View {
             p.setColor(Color.YELLOW);
         else
             p.setColor(Color.RED);
+        invalidate();
         return p;
     }
 
@@ -145,6 +165,8 @@ public class CustomView extends View {
     for (int j = 0; j < 10; j++) {
         for (int i = 0; i < 10; i++) {
             grid[j][i].nbCell = j * i + i;
+           if(lost)
+                grid[j][i].cover = Cover.NO;
             //canvas.drawRect(new Rect(-0+i*size/2, -size/2, size/2, 0+i*size/2), black);
             canvas.save();
             grid[j][i].state();
@@ -170,7 +192,6 @@ public class CustomView extends View {
     // public method that needs to be overridden to handle the touches from a
 // user
     public boolean onTouchEvent(MotionEvent event) {
-
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN && !lost) {
            // grid[1][4].type = Type.MINE;
             Log.d("eventpress", "fuck " + (int)event.getX());
@@ -181,12 +202,24 @@ public class CustomView extends View {
                    // Log.d("eventpress", "eventx" + (int)event.getX());
                    if(grid[j][i].r.contains((int)event.getX(), (int)event.getY()))
                     {
-                        grid[j][i].cover = Cover.NO;
+                        if(!grid[j][i].marked) {
+                            if (mode)
+                                grid[j][i].cover = Cover.NO;
+                            else {
+                                grid[j][i].marked = !grid[j][i].marked;
+                                if (grid[j][i].marked)
+                                    mark++;
+                                else mark--;
+
+                            }
+                        }
+
                         //grid[j][i].type = Type.MINE;
                         Log.d("eventpress", "eventx" + (int)event.getX());
                     }
                 }
             }
+
 
         invalidate();
         return true;
