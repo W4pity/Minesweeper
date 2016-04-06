@@ -18,6 +18,7 @@ public class cell {
     public Type type;
     public int nbBombe;
     public Cover cover = Cover.YES;
+    public boolean number = false;
     public Paint  blue = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint  black = new Paint(Paint.ANTI_ALIAS_FLAG);
     public Paint  green = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -29,8 +30,10 @@ public class cell {
 
     public cell (Type t)
     {
+
         actualPaint.setColor(0xFF0000FF);
         actualWrite.setColor(0xFF0000FF);
+        actualWrite.setTextSize(170);
         blue.setColor(0xFF0000FF);
         red.setColor(0xFFFF0000);
         green = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -45,13 +48,13 @@ public class cell {
     {
 
         if (cover == Cover.YES) {
-            actualPaint.setColor(Color.BLUE);
+            actualPaint.setColor(Color.BLACK);
             if(marked)
                 actualPaint.setColor(Color.YELLOW);
         }
 
         else if(cover == Cover.NO) {
-            actualPaint.setColor(Color.WHITE);
+            actualPaint.setColor(Color.GRAY);
 
             if(type == Type.MINE) {
                 actualPaint.setColor(Color.RED);
@@ -65,6 +68,7 @@ public class cell {
 
     public void stateWrite()
     {
+
         if(nbBombe == 1)
             actualWrite.setColor(Color.BLUE);
        else if(nbBombe == 2)
@@ -73,6 +77,8 @@ public class cell {
             actualWrite.setColor(Color.YELLOW);
         else
             actualWrite.setColor(Color.RED);
+
+
     }
 
 

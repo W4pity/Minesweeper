@@ -10,16 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    static TextView t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        t=(TextView)findViewById(R.id.tv2);
         Display d = getWindowManager().getDefaultDisplay();
         int width = d.getWidth();
         CustomView c = (CustomView)findViewById(R.id.Cv);
@@ -32,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
                 CustomView c = (CustomView)findViewById(R.id.Cv);
                 c.reset();
 
+
                 Log.d("resetapp", "reseted");
             }
         });
+
 
 
         final Button bu = (Button)findViewById(R.id.bu);
@@ -45,16 +50,23 @@ public class MainActivity extends AppCompatActivity {
                 if(CustomView.mode)
                     bu.setText("uncover mode");
                 else bu.setText("marked mode");
+
                 Log.d("resetapp", "reseted");
 
 
             }
         });
         //CustomView cv = new CustomView(this);
+
     }
 
 
+    //set la textview2, drapeaux
 
+    /*static void viewMark()
+    {
+       t.setText("Marked");
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

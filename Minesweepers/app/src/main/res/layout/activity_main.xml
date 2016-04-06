@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Marked: 0"
-            android:id="@+id/textView2"
+            android:id="@+id/tv2"
             android:layout_weight="0.48" />
     </LinearLayout>
 </LinearLayout>
