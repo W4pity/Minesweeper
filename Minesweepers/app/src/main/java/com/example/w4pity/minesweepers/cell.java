@@ -58,8 +58,10 @@ public class cell {
 
             if(type == Type.MINE) {
                 actualPaint.setColor(Color.RED);
-               // Toast.makeText(CustomView.cc, "GAME OVER", Toast.LENGTH_LONG).show();
-
+                if(CustomView.looseToast) {
+                    Toast.makeText(CustomView.cc, "GAME OVER", Toast.LENGTH_LONG).show();
+                    CustomView.looseToast = false;
+                }
                 CustomView.lost = true;
             }
 

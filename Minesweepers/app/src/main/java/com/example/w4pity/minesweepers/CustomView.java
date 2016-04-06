@@ -33,7 +33,7 @@ public class CustomView extends View {
     public int size;
     public static boolean lost = false, win = false;
     public static Context cc;
-    public static boolean mode = true; //1= normal 0 marking
+    public static boolean mode = true, looseToast = false; //1= normal 0 marking
     public static int mark = 0;
     // default constructor for the class that takes in a context
     public CustomView(Context c) {
@@ -248,7 +248,10 @@ public class CustomView extends View {
                    // Log.d("eventpress", "eventx" + (int)event.getX());
                    if(grid[j][i].r.contains((int)event.getX(), (int)event.getY()))
                     {
-
+                        if(grid[j][i].type == Type.MINE)
+                        {
+                            looseToast =! looseToast;
+                        }
                         if(grid[j][i].nbBombe == 0 && mode)
                             uncover(j, i, 0);
                         if(!grid[j][i].marked) {
@@ -289,6 +292,7 @@ public class CustomView extends View {
         invalidate();
         return true;
     }
+
         return super.onTouchEvent(event);
     }
 

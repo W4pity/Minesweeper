@@ -1,5 +1,6 @@
 package com.example.w4pity.minesweepers;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     static TextView t;
+    static Context cont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Display d = getWindowManager().getDefaultDisplay();
         int width = d.getWidth();
         CustomView c = (CustomView)findViewById(R.id.Cv);
+        cont = getApplicationContext();
         c.setLayoutParams(new LinearLayout.LayoutParams(width, width));
         c.size = width/10;
         Button bO = (Button)findViewById(R.id.reset);
